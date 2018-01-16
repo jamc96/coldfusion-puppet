@@ -1,7 +1,7 @@
 # == Class: coldfusion::config
 #
 class coldfusion::config(
-  $cfdir     = $::coldfusion::cfdir,
+  $cfroot     = $::coldfusion::cfroot,
   $cflogsdir = $::coldfusion::cflogsdir,
   $cfowner   = $::coldfusion::cfowner,
   $cfgroup   = $::coldfusion::cfgroup,
@@ -16,7 +16,7 @@ class coldfusion::config(
       selinux_ignore_defaults => true,
     }
     file {
-      $cfdir:
+      $cfroot:
       ensure => directory;
       $cflogsdir:
       ensure  => directory,

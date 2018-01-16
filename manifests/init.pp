@@ -44,8 +44,8 @@
 #
 class coldfusion(
   Integer $version            = 9,
-  String $cfdir               = "/opt/coldfusion${version}",
-  String $cflogs              = "${cfdir}/logs",
+  String $cfroot              = "/opt/coldfusion${version}",
+  String $cflogs              = "${cfroot}/logs",
   Array $cfpackages           = $::coldfusion::params::cfpackages,
   String $cfpackages_ensure   = 'present',
   String $cfpackages_provider = 'yum',
@@ -56,7 +56,7 @@ class coldfusion(
 )inherits ::coldfusion::params {
 
   if $version > 9 {
-    $cflogsdir = "${cfdir}/cfusion/logs"
+    $cflogsdir = "${cfroot}/cfusion/logs"
   }else {
     $cflogsdir = $cflogs
   }
