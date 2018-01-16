@@ -42,7 +42,23 @@
 #
 # Copyright 2018 Your name here, unless otherwise noted.
 #
-class coldfusion {
+class coldfusion(
+  Integer $version            = 9,
+  String $cfdir               = "/opt/coldfusion${version}",
+  String $cflogs              = "${cfdir}/logs",
+  Array $cfpackages           = $::coldfusion::params::cfpackages,
+  String $cfpackages_ensure   = 'present',
+  String $cfpackages_provider = 'yum',
 
+)inherits ::coldfusion::params {
 
+  if $version > 9 {
+    $cflogsdir = "${cfdir}/cfusion/logs"
+  }else {
+    $cflogsdir = $cflogs
+  }
+
+  class {'::coldfusion::install': } ->
+  class {'::coldfusion::config': } ->
+  Class['::coldfusion']
 }
