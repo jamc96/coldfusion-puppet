@@ -49,7 +49,10 @@ class coldfusion(
   Array $cfpackages           = $::coldfusion::params::cfpackages,
   String $cfpackages_ensure   = 'present',
   String $cfpackages_provider = 'yum',
-
+  String $cfensure            = 'present',
+  String $cfowner             = 'coldfusion',
+  String $cfgroup             = 'coldfusion',
+  String $cfmode              = '0775',
 )inherits ::coldfusion::params {
 
   if $version > 9 {

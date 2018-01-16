@@ -3,16 +3,23 @@
 class coldfusion::config(
   $cfdir     = $::coldfusion::cfdir,
   $cflogsdir = $::coldfusion::cflogsdir,
+  $cfowner   = $::coldfusion::cfowner,
+  $cfgroup   = $::coldfusion::cfgroup,
+  $cfmode    = $::coldfusion::cfmode,
+  $cfensure  = $::coldfusion::cfensure,
   ) {
     File{
-      ensure => 'present',
+      ensure => $cfensure,
+      mode   => $cfmode,
+      owner  => $cfowner,
+      group  => $cfgroup,
       selinux_ignore_defaults => true,
-      mode   => '0775',
     }
     file {
       $cfdir:
       ensure => directory;
       $cflogsdir:
-      ensure => directory,
+      ensure  => directory,
+      recurse => true,
     }
 }
