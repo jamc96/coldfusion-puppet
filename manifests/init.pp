@@ -43,26 +43,32 @@
 # Copyright 2018 Your name here, unless otherwise noted.
 #
 class coldfusion(
-  Integer $version            = 9,
-  String $cfroot              = "/opt/coldfusion${version}",
-  String $cflogs              = "${cfroot}/logs",
-  Array $cfpackages           = $::coldfusion::params::cfpackages,
-  String $cfpackages_ensure   = 'present',
-  String $cfpackages_provider = 'yum',
-  String $cfensure            = 'present',
-  String $cfowner             = 'coldfusion',
-  String $cfgroup             = 'coldfusion',
-  String $cfmode              = '0775',
+  $version             = '9',
+  $cfroot              = "/opt/coldfusion${version}",
+  $cflogs              = "${cfroot}/logs",
+  $cfpackages          = $::coldfusion::params::cfpackages,
+  $cfpackages_ensure   = 'present',
+  $cfpackages_provider = 'yum',
+  $cfensure            = 'present',
+  $cfowner             = 'coldfusion',
+  $cfgroup             = 'coldfusion',
+  $cfmode              = '0775',
 )inherits ::coldfusion::params {
 
-  if $version > 9 {
-    $cflogsdir  = "${cfroot}/cfusion/logs"
-    $cfhome     = "${cfroot}/cfusion"
-  }else {
-    $cflogsdir = $cflogs
-    $cfhome    = $cfroot
+  case $version {
+    '8': {
+      $cflogsdir = $cflogs
+      $cfhome    = $cfroot
+    }
+    '9': {
+      $cflogsdir = $cflogs
+      $cfhome    = $cfroot
+    }
+    default: {
+      $cflogsdir  = "${cfroot}/cfusion/logs"
+      $cfhome     = "${cfroot}/cfusion"
+    }
   }
-
   #class {'::coldfusion::install': } ->
   class {'::coldfusion::config': } ->
   Class['::coldfusion']
