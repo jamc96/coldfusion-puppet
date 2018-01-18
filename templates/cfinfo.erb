@@ -1,0 +1,14 @@
+#!/bin/sh
+
+CFUSION_HOME=<%= @cfhome %>
+
+#
+# This sets _JAVACMD.
+#
+. $CFUSION_HOME/bin/findjava.sh
+
+# Call coldfusion.tools.CfinfoMain with the found settings
+${_JAVACMD} -cp $CFUSION_HOME/lib/cfusion.jar coldfusion.tools.CfinfoMain \
+	$1 \
+	$2 \
+	$3
