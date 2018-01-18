@@ -63,7 +63,7 @@ class coldfusion(
     $cfhome    = $cfroot
   }
 
-  class {'::coldfusion::install': } ->
+  #class {'::coldfusion::install': } ->
   class {'::coldfusion::config': } ->
   Class['::coldfusion']
 }
