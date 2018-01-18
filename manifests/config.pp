@@ -15,7 +15,7 @@ class coldfusion::config(
       group                   => $cfgroup,
       selinux_ignore_defaults => true,
     }
-    case $cfroot {
+    case $cfhome {
       /cfusion/: {
         file {
           $cfroot:
