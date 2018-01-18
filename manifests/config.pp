@@ -15,18 +15,41 @@ class coldfusion::config(
       group                   => $cfgroup,
       selinux_ignore_defaults => true,
     }
-    file {
-      $cfroot:
-      ensure  => directory,
-      recurse => true;
-      $cflogsdir:
-      ensure  => directory,
-      mode    => $cfmode,
-      recurse => true;
-      'cfinfo':
-      ensure  => $cfensure,
-      path    => '/usr/bin/cfinfo',
-      content => template("${module_name}/cfinfo.erb"),
-      require => File[$cfroot],
+    case $cfroot {
+      /cfusion/: {
+        file {
+          $cfroot:
+          ensure  => directory,
+          recurse => true;
+          $cfhome:
+          ensure => directory,
+          recurse => true;
+          $cflogsdir:
+          ensure  => directory,
+          mode    => $cfmode,
+          recurse => true;
+          'cfinfo':
+          ensure  => $cfensure,
+          path    => '/usr/bin/cfinfo',
+          content => template("${module_name}/cfinfo.erb"),
+          require => File[$cfroot],
+        }
+      }
+      default: {
+        file {
+          $cfroot:
+          ensure  => directory,
+          recurse => true;
+          $cflogsdir:
+          ensure  => directory,
+          mode    => $cfmode,
+          recurse => true;
+          'cfinfo':
+          ensure  => $cfensure,
+          path    => '/usr/bin/cfinfo',
+          content => template("${module_name}/cfinfo.erb"),
+          require => File[$cfroot],
+        }
+      }
     }
 }
