@@ -5,9 +5,8 @@ class coldfusion::install(
   $cfpackages          = $::coldfusion::cfpackages,
   $cfpackages_provider = $::coldfusion::cfpackages_provider,
   ) {
-  package { 'packages':
+  package { $cfpackages:
     ensure   => $cfpackages_ensure,
-    name     => $cfpackages,
     provider => $cfpackages_provider,
   }
 }

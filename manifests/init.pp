@@ -56,9 +56,11 @@ class coldfusion(
 )inherits ::coldfusion::params {
 
   if $version > 9 {
-    $cflogsdir = "${cfroot}/cfusion/logs"
+    $cflogsdir  = "${cfroot}/cfusion/logs"
+    $cfhome     = "${cfroot}/cfusion/"
   }else {
     $cflogsdir = $cflogs
+    $cfhome    = "${cfroot}/"
   }
 
   class {'::coldfusion::install': } ->
