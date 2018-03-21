@@ -19,15 +19,12 @@ class coldfusion::config(
       /cfusion/: {
         file {
           $cfroot:
-          ensure  => directory,
-          recurse => true;
+          ensure => directory;
           $cfhome:
-          ensure => directory,
-          recurse => true;
+          ensure => directory;
           $cflogsdir:
-          ensure  => directory,
-          mode    => $cfmode,
-          recurse => true;
+          ensure => directory,
+          mode   => $cfmode;
           'cfinfo':
           ensure  => $cfensure,
           path    => '/usr/bin/cfinfo',
@@ -38,12 +35,10 @@ class coldfusion::config(
       default: {
         file {
           $cfroot:
-          ensure  => directory,
-          recurse => true;
+          ensure  => directory;
           $cflogsdir:
-          ensure  => directory,
-          mode    => $cfmode,
-          recurse => true;
+          ensure => directory,
+          mode   => $cfmode;
           'cfinfo':
           ensure  => $cfensure,
           path    => '/usr/bin/cfinfo',
