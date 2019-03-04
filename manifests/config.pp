@@ -6,6 +6,7 @@ class coldfusion::config {
     ensure => $coldfusion::config_ensure,
     owner  => 'coldfusion',
     group  => 'coldfusion',
+    mode    => '0775',
   }
   # create directories
   [$coldfusion::root_path, $coldfusion::home_dir_path, $coldfusion::logs_dir_path].each |$name| {
@@ -23,7 +24,6 @@ class coldfusion::config {
   file { '/etc/rc.d/rc.local':
     owner   => 'root',
     group   => 'root',
-    mode    => '0775',
     content => template("${module_name}/rc.local.erb"),
   }
 }
