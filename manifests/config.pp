@@ -1,11 +1,12 @@
 # == Class: coldfusion::config
 #
-class coldfusion::config {
+class coldfusion::config inherits coldfusion {
   # class defaults
   File{
     ensure => $coldfusion::config_ensure,
     owner  => 'coldfusion',
     group  => 'coldfusion',
+    selinux_ignore_defaults => true,
   }
   # create directories
   [$coldfusion::root_path, $coldfusion::home_dir_path].each |$name| {
