@@ -17,16 +17,13 @@ class coldfusion::config {
     ensure => directory,
     mode   => '0775',
   }
-  # create files
-  file { '/usr/bin/cfinfo':
-    ensure  => file,
-    content => template("${module_name}/cfinfo.erb"),
-    require => File[$coldfusion::root_path],
-  }
-  # coldfusion profile
-  file { '/etc/rc.d/rc.local':
-    owner   => 'root',
-    group   => 'root',
-    content => template("${module_name}/rc.local.erb"),
+  # create config files
+  file {
+    '/usr/bin/cfinfo':
+      content => template("${module_name}/cfinfo.erb");
+    '/etc/rc.d/rc.local':
+      owner   => 'root',
+      group   => 'root',
+      content => template("${module_name}/rc.local.erb");
   }
 }
