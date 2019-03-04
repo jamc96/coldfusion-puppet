@@ -1,50 +1,29 @@
 # == Class: coldfusion::config
 #
-class coldfusion::config(
-  $cfroot    = $::coldfusion::cfroot,
-  $cflogsdir = $::coldfusion::cflogsdir,
-  $cfowner   = $::coldfusion::cfowner,
-  $cfgroup   = $::coldfusion::cfgroup,
-  $cfmode    = $::coldfusion::cfmode,
-  $cfensure  = $::coldfusion::cfensure,
-  $cfhome    = $::coldfusion::cfhome,
-  ) {
-    File{
-      ensure                  => $cfensure,
-      owner                   => $cfowner,
-      group                   => $cfgroup,
-      selinux_ignore_defaults => true,
+class coldfusion::config {
+  # class defaults
+  File{
+    ensure => $coldfusion::config_ensure,
+    owner  => 'coldfusion',
+    group  => 'coldfusion',
+  }
+  # create directories
+  [$coldfusion::root_path, $coldfusion::home_dir_path, $coldfusion::logs_dir_path].each |$name| {
+    package { $name:
+      ensure => directory,
     }
-    case $cfhome {
-      /cfusion/: {
-        file {
-          $cfroot:
-          ensure => directory;
-          $cfhome:
-          ensure => directory;
-          $cflogsdir:
-          ensure => directory,
-          mode   => $cfmode;
-          'cfinfo':
-          ensure  => $cfensure,
-          path    => '/usr/bin/cfinfo',
-          content => template("${module_name}/cfinfo.erb"),
-          require => File[$cfroot],
-        }
-      }
-      default: {
-        file {
-          $cfroot:
-          ensure  => directory;
-          $cflogsdir:
-          ensure => directory,
-          mode   => $cfmode;
-          'cfinfo':
-          ensure  => $cfensure,
-          path    => '/usr/bin/cfinfo',
-          content => template("${module_name}/cfinfo.erb"),
-          require => File[$cfroot],
-        }
-      }
-    }
+  }
+  # create files
+  file { '/usr/bin/cfinfo':
+    ensure  => file,
+    content => template("${module_name}/cfinfo.erb"),
+    require => File[$coldfusion::root_path],
+  }
+  # coldfusion profile
+  file { '/etc/rc.d/rc.local':
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0775',
+    content => template("${module_name}/rc.local.erb"),
+  }
 }

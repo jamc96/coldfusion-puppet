@@ -43,33 +43,21 @@
 # Copyright 2018 Your name here, unless otherwise noted.
 #
 class coldfusion(
-  $version             = '9',
-  $cfroot              = "/opt/coldfusion${version}",
-  $cflogs              = "${cfroot}/logs",
-  $cfpackages          = $::coldfusion::params::cfpackages,
-  $cfpackages_ensure   = 'present',
-  $cfpackages_provider = 'yum',
-  $cfensure            = 'present',
-  $cfowner             = 'coldfusion',
-  $cfgroup             = 'coldfusion',
-  $cfmode              = '0775',
-)inherits ::coldfusion::params {
-
-  case $version {
-    '8': {
-      $cflogsdir = $cflogs
-      $cfhome    = $cfroot
-    }
-    '9': {
-      $cflogsdir = $cflogs
-      $cfhome    = $cfroot
-    }
-    default: {
-      $cflogsdir  = "${cfroot}/cfusion/logs"
-      $cfhome     = "${cfroot}/cfusion"
-    }
+  $version        = '9',
+  $root_path      = "/opt/coldfusion${version}",
+  $package_ensure = 'present',
+  $config_ensure  = 'present',
+){
+  # default variable
+  $home_dir_path = $version ? {
+    /(8|9)/ => $root_path,
+    default => "${root_path}/cfusion"
   }
-  #class {'::coldfusion::install': } ->
-  class {'::coldfusion::config': } ->
-  Class['::coldfusion']
+  $logs_dir_path = "${home_dir_path}/logs"
+  # class containment
+  include ::coldfusion::install
+  include ::coldfusion::config
+  # class relationships
+  Class['::coldfusion::install']
+  -> Class['::coldfusion::config']
 }
