@@ -1,5 +1,5 @@
 {
-  "name": "puppet-coldfusion",
+  "name": "jamc96-coldfusion",
   "version": "0.1.0",
   "author": "jamc96",
   "summary": "configure coldfusion",
@@ -8,54 +8,21 @@
   "project_page": "https://github.com/jamc96/coldfusion-puppet",
   "issues_url": "https://github.com/jamc96/coldfusion-puppet/issues",
   "dependencies": [
-    {
-      "name": "puppetlabs-stdlib",
-      "version_requirement": ">= 1.0.0"
-    }
   ],
   "operatingsystem_support": [
     {
       "operatingsystem": "CentOS",
       "operatingsystemrelease": [
+        "6",
         "7"
       ]
     },
-    {
-      "operatingsystem": "OracleLinux",
-      "operatingsystemrelease": [
-        "7"
-      ]
-    },
+    
     {
       "operatingsystem": "RedHat",
       "operatingsystemrelease": [
+        "6",
         "7"
-      ]
-    },
-    {
-      "operatingsystem": "Scientific",
-      "operatingsystemrelease": [
-        "7"
-      ]
-    },
-    {
-      "operatingsystem": "Debian",
-      "operatingsystemrelease": [
-        "8"
-      ]
-    },
-    {
-      "operatingsystem": "Ubuntu",
-      "operatingsystemrelease": [
-        "16.04"
-      ]
-    },
-    {
-      "operatingsystem": "windows",
-      "operatingsystemrelease": [
-        "2008 R2",
-        "2012 R2",
-        "10"
       ]
     }
   ],
