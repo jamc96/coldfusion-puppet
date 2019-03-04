@@ -6,13 +6,16 @@ class coldfusion::config {
     ensure => $coldfusion::config_ensure,
     owner  => 'coldfusion',
     group  => 'coldfusion',
-    mode    => '0775',
   }
   # create directories
-  [$coldfusion::root_path, $coldfusion::home_dir_path, $coldfusion::logs_dir_path].each |$name| {
-    package { $name:
+  [$coldfusion::root_path, $coldfusion::home_dir_path].each |$name| {
+    file { $name:
       ensure => directory,
     }
+  }
+  file { $coldfusion::logs_dir_path:
+    ensure => directory,
+    mode   => '0775',
   }
   # create files
   file { '/usr/bin/cfinfo':
