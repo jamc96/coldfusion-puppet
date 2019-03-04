@@ -8,9 +8,15 @@ class coldfusion::config inherits coldfusion {
     group  => 'coldfusion',
     selinux_ignore_defaults => true,
   }
-  # create directories
-  [$coldfusion::root_path, $coldfusion::home_dir_path].each |$name| {
-    file { $name:
+  # validate directories
+  if $coldfusion::root_path !=  $coldfusion::home_dir_path {
+    [$coldfusion::root_path, $coldfusion::home_dir_path].each |$name| {
+      file { $name:
+        ensure => directory,
+      }
+    }
+  } else {
+    file { $coldfusion::root_path:
       ensure => directory,
     }
   }
